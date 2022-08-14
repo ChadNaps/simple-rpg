@@ -52,12 +52,16 @@ Please select an option: \n\
 	let tryAgainMessage = "Invalid selection, please try again: ";
 	let todoMessage = "This feature is still in development. Please select another: ";
 
+	console.clear();
 	prompt(welcomeMessage);
 
-	async	function prompt(message = tryAgainMessage) {
+	function prompt(message = tryAgainMessage) {
 		rl.question(message, (selection) => {
+			let descendText = "Good luck adventurer. You begin your descent";
 			if (selection === '1') {
-				playIntro();
+				console.clear();
+				dramaticElipses(descendText, 5, 750);
+				setTimeout(playIntro, 800*5);
 			} else if (selection === '2') {
 				prompt(todoMessage);
 			} else if (selection === '3') {
@@ -78,8 +82,27 @@ function exit(message = "Closed\n") {
 }
 
 function playIntro() {
+	console.clear();
 	console.log("Intro!");
 	// TODO
+}
+
+function dramaticElipses(message, times, intervalInMs) {
+	rl.write(`${message}`);
+	waitAndDo(times);
+
+	function waitAndDo(times) {
+		if(times < 1) {
+			return;
+		}
+
+		setTimeout(function() {
+			rl.write('.');
+
+			waitAndDo(times-1);
+		}, intervalInMs);
+	}
+
 }
 
 function main() {
