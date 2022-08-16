@@ -1,4 +1,5 @@
 const readline = require('readline');
+const { dramaticElipses, quit } = require('./global-functions.js');
 const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout
@@ -25,10 +26,6 @@ let saveData = {
 		}
 	}
 };
-
-function quit(interfaceToQuit, code) {
-	interfaceToQuit.on("close", (code) => { process.exit(code); });
-}
 
 function mainMenu() {
 	let welcomeMessage = 
@@ -61,36 +58,18 @@ Please select an option: \n\
 	}
 }
 
-function exit(message = "Closed\n") {
-	rl.on("close", function() {
-		console.log(message);
-	});
+// function exit(message = "Closed\n") {
+// 	rl.on("close", function() {
+// 		console.log(message);
+// 	});
 
-	rl.close();
-}
+// 	rl.close();
+// }
 
 function playIntro() {
 	console.clear();
 	console.log("Intro!");
 	// TODO
-}
-
-function dramaticElipses(message, times, intervalInMs) {
-	rl.write(`${message}`);
-	waitAndDo(times);
-
-	function waitAndDo(times) {
-		if(times < 1) {
-			return;
-		}
-
-		setTimeout(function() {
-			rl.write('.');
-
-			waitAndDo(times-1);
-		}, intervalInMs);
-	}
-
 }
 
 function main() {
@@ -99,3 +78,4 @@ function main() {
 }
 
 main();
+
