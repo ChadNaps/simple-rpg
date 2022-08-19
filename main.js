@@ -5,7 +5,7 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 
-let saveData = {
+const saveData = {
 	exists: false,
 	player: { name: "" },
 	character: {
@@ -26,21 +26,21 @@ let saveData = {
 };
 
 function mainMenu() {
-	let welcomeMessage = 
+	const welcomeMessage = 
 	"Welcome to the Playground \n\
 Please select an option: \n\
 		 1. New Game \n\
 		 2. Load Game \n\
 		 3. Quit \n";
-	let tryAgainMessage = "Invalid selection, please try again: ";
-	let todoMessage = "This feature is still in development. Please select another: ";
+	const tryAgainMessage = "Invalid selection, please try again: ";
+	const todoMessage = "This feature is still in development. Please select another: ";
 
 	console.clear();
 	prompt(welcomeMessage);
 
 	function prompt(message = tryAgainMessage) {
 		rl.question(message, (selection) => {
-			let descendText = "Good luck adventurer. You begin your descent";
+			const descendText = "Good luck adventurer. You begin your descent";
 			if (selection === '1') {
 				console.clear();
 				dramaticElipses(descendText, 5, 750, rl);
@@ -57,9 +57,10 @@ Please select an option: \n\
 }
 
 function playIntro() {
+	const flavorText = "You're in a crummy dungeon. I don't know what else to tell you... uh, enjoy.";
 	console.clear();
-	console.log("<Introduction Text Here>");
-	// TODO
+	console.log(flavorText);
+	setTimeout(() => { rl.close(); }, 3000);
 }
 
 function main() {
