@@ -1,11 +1,7 @@
 const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-//  output: process.stdout
-});
 
-exports.dramaticElipses = function (message, times, intervalInMs) {
-	rl.write(message);
+exports.dramaticElipses = function (message, times, intervalInMs, iostream) {
+	iostream.write(message);
 	waitAndDo(times);
 
 	function waitAndDo(times) {
@@ -14,7 +10,7 @@ exports.dramaticElipses = function (message, times, intervalInMs) {
 		}
 
 		setTimeout(function() {
-			rl.write('.');
+			iostream.write('.');
 
 			waitAndDo(times-1);
 		}, intervalInMs);

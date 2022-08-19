@@ -45,7 +45,7 @@ Please select an option: \n\
 			let descendText = "Good luck adventurer. You begin your descent";
 			if (selection === '1') {
 				console.clear();
-				dramaticElipses(descendText, 5, 750);
+				dramaticElipses(descendText, 5, 750, rl);
 				setTimeout(playIntro, 800*5);
 			} else if (selection === '2') {
 				prompt(todoMessage);
@@ -58,17 +58,9 @@ Please select an option: \n\
 	}
 }
 
-// function exit(message = "Closed\n") {
-// 	rl.on("close", function() {
-// 		console.log(message);
-// 	});
-
-// 	rl.close();
-// }
-
 function playIntro() {
 	console.clear();
-	console.log("Intro!");
+	console.log("<Introduction Text Here>");
 	// TODO
 }
 
