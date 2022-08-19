@@ -57,7 +57,7 @@ Please select an option: \n\
 }
 
 function playIntro() {
-	const flavorText = "You're in a crummy dungeon. I don't know what else to tell you... uh, enjoy.";
+	const flavorText = "You reach the bottom of the dungeon stairs. You find a heavy steel door in front of you.";
 	console.clear();
 	console.log(flavorText);
 	setTimeout(() => { rl.close(); }, 3000);
