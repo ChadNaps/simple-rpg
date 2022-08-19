@@ -5,8 +5,6 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 
-let selection = "";
-let isValidSelection = false;
 let saveData = {
 	exists: false,
 	player: { name: "" },
