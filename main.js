@@ -46,7 +46,7 @@ Please select an option: \n\
 			if (selection === '1') {
 				console.clear();
 				if (isDevMode)
-					playIntro();
+					playIntro(); // TODO - Remove if/else before launch
 				else {
 					dramaticElipses(descendText, 5, 750, rl);
 					setTimeout(playIntro, 800*5);
@@ -64,8 +64,9 @@ Please select an option: \n\
 
 function playIntro() {
 	const flavorText = "It's been days since you last saw a friendly face. The cool air of the dungeon sits stale around you. \n\
-Looking down, past the torch you bear, to a puddle, you are shocked to see how filthy your face has gotten. \n\
-You are very average looking, which doesn't do justice to who you are as a person. But now, staring back up at you, you see...\n";
+Looking down, past the torch you bear, you see a puddle. In it, you find a stranger staring back at you. \n\
+You are surprised to see how filthy your face has gotten these last few days. Though, if you disregard the mounting filth, you arn't ugly. \n\
+In fact, you're very average looking, which you suppose could be worse.\n";
 	const raceQ = "Please select your race: \n\
 		       1. Human \n\
 		       2. Elf \n\
@@ -78,18 +79,16 @@ You are very average looking, which doesn't do justice to who you are as a perso
 	function prompt(message = tryAgainMessage) {
 		rl.question(message, (selection) => {
 				if (selection === '1') {
-				saveData.character.class = "Human";
+					saveData.character.class = "Human";
 				} else if (selection === '2') {
-				saveData.character.class = "Elf";
+					saveData.character.class = "Elf";
 				} else if (selection === '3') {
-				saveData.character.class = "Dwarf";
+					saveData.character.class = "Dwarf";
 				} else {
-				prompt();
+					prompt();
 				}
-				});
+		});
 	}
-
-
 }
 
 function main() {
