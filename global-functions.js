@@ -6,6 +6,7 @@ exports.dramaticElipses = function (message, times, intervalInMs, iostream) {
 
 	function waitAndDo(times) {
 		if(times < 1) {
+			iostream.write('\n');
 			return;
 		}
 
