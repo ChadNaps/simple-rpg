@@ -1,4 +1,4 @@
-const isDevMode = true;
+const isDevMode = false;
 
 const readline = require('readline');
 const { dramaticElipses, quit, prompt } = require('./global-functions.js');
@@ -28,14 +28,29 @@ const saveData = {
 };
 
 function mainMenu() {
-	const welcomeMessage = "Welcome to my game. I hope you enjoy yourself. \n\
+
+	const welcomeMessage = "Welcome to my game, enjoy! \n\
 Please select an option: \n\
 		 1. New Game \n\
 		 2. Load Game \n\
 		 3. Quit \n";
 	const todoMessage = "This feature is still in development. Please select another: ";
+
+	async function newGame() {
+		const descendText = "Good luck adventurer. You begin your descent";
+		console.clear();
+		if (isDevMode) {
+			return;
+		} else {
+			dramaticElipses(descendText, 5, 750, rl);
+			setTimeout(() => { return }, 800*5);
+		}
+	}
+
 	console.clear();
-	prompt(rl, ["New Game", "Load Game", "Quit"], welcomeMessage);
+	prompt(rl, { "1": newGame }, welcomeMessage);
+
+	playIntro();
 	// function prompt(message = tryAgainMessage) {
 //	rl.question(message, (selection) => {
 //		const descendText = "Good luck adventurer. You begin your descent";
