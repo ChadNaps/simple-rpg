@@ -10,19 +10,24 @@ function isJson(data) {
 	}
 }
 
-exports.dramaticElipses = function (message, times, intervalInMs, iostream) {
+exports.dramaticElipses = async function (message, times, intervalInMs, iostream) {
 	iostream.write(message);
-	waitAndDo(times);
-	function waitAndDo(times) {
+	return await waitAndDo(times);
+	async function waitAndDo(times) {
 		if(times < 1) {
 			iostream.write('\n');
-			return;
+			return new Promise(resolve => resolve("waitAndDo resolution"));
 		}
-		setTimeout(function() {
-				iostream.write('.');
-
-				waitAndDo(times-1);
+		return await lambda();
+		async function lambda() {
+			return new Promise(resolve => {
+				setTimeout(() => {
+					iostream.write('.');
+					return waitAndDo(times-1);
 				}, intervalInMs);
+				resolve("lambda resolution");
+			});
+		}
 	}
 }
 
@@ -43,7 +48,7 @@ exports.prompt = async function (iostream, responsesAndActionsObject, message = 
 		console.log(responsesAndActionsObject[selection]);
 		if (selection === '1') {
 		const returnedPromise = responsesAndActionsObject[selection]();
-			
+		console.log(returnedPromise);
 		} else {
 			exports.prompt(iostream, responsesAndActionsObject);
 		}

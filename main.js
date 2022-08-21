@@ -27,8 +27,7 @@ const saveData = {
 	}
 };
 
-function mainMenu() {
-
+async function mainMenu() {
 	const welcomeMessage = "Welcome to my game, enjoy! \n\
 Please select an option: \n\
 		 1. New Game \n\
@@ -40,17 +39,15 @@ Please select an option: \n\
 		const descendText = "Good luck adventurer. You begin your descent";
 		console.clear();
 		if (isDevMode) {
-			return;
+			return; 
 		} else {
-			dramaticElipses(descendText, 5, 750, rl);
-			setTimeout(() => { return }, 800*5);
+			return dramaticElipses(descendText, 5, 750, rl)
 		}
 	}
 
 	console.clear();
-	prompt(rl, { "1": newGame }, welcomeMessage);
+  prompt(rl, { "1": newGame }, welcomeMessage);
 
-	playIntro();
 	// function prompt(message = tryAgainMessage) {
 //	rl.question(message, (selection) => {
 //		const descendText = "Good luck adventurer. You begin your descent";
@@ -82,29 +79,31 @@ In fact, you're very average looking, which you suppose could be worse.\n";
 		       1. Human \n\
 		       2. Elf \n\
 		       3. Dwarf \n\ ";
-
 	console.clear();
 	console.log(flavorText);
-	prompt(raceQ);
-
-	function prompt(message = tryAgainMessage) {
-		rl.question(message, (selection) => {
-				if (selection === '1') {
-					saveData.character.class = "Human";
-				} else if (selection === '2') {
-					saveData.character.class = "Elf";
-				} else if (selection === '3') {
-					saveData.character.class = "Dwarf";
-				} else {
-					prompt();
-				}
-		});
-	}
+	prompt(rl, { '1': () => console.log("TODO") }, raceQ);
+//
+//	function prompt(message = tryAgainMessage) {
+//		rl.question(message, (selection) => {
+//				if (selection === '1') {
+//					saveData.character.class = "Human";
+//				} else if (selection === '2') {
+//					saveData.character.class = "Elf";
+//				} else if (selection === '3') {
+//					saveData.character.class = "Dwarf";
+//				} else {
+//					prompt();
+//				}
+//		});
+//	}
 }
 
-function main() {
-	mainMenu();
-
+async function main() {
+	console.log(await mainMenu());
+	await playIntro();
+		
+	console.log("Done!");
+	//playIntro();
 	// setTimeout(() => { rl.close(); }, 3000);
 }
 
