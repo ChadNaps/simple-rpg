@@ -1,7 +1,7 @@
 const isDevMode = false;
 
 const readline = require('readline');
-const { dramaticElipses, quit, prompt } = require('./global-functions.js');
+const { dramaticEllipses, quit, prompt } = require('./global-functions.js');
 const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout
@@ -41,12 +41,14 @@ Please select an option: \n\
 		if (isDevMode) {
 			return; 
 		} else {
-			return dramaticElipses(descendText, 5, 750, rl)
+			return dramaticEllipses(descendText, 5, 750, rl);
 		}
 	}
 
 	console.clear();
-  prompt(rl, { "1": newGame }, welcomeMessage);
+	prompt(rl, { "1": newGame }, welcomeMessage).then((returnVal) => { console.log("callback return next"); console.log(returnVal) });
+	//console.log("newGame return value next:");
+	//console.log(returnVal);
 
 	// function prompt(message = tryAgainMessage) {
 //	rl.question(message, (selection) => {
@@ -56,7 +58,7 @@ Please select an option: \n\
 //			if (isDevMode)
 //				playIntro(); // TODO - Remove if/else before launch
 //			else {
-//				dramaticElipses(descendText, 5, 750, rl);
+//				dramaticEllipses(descendText, 5, 750, rl);
 //				setTimeout(playIntro, 800*5);
 //			}
 //		} else if (selection === '2') {
@@ -99,8 +101,10 @@ In fact, you're very average looking, which you suppose could be worse.\n";
 }
 
 async function main() {
-	console.log(await mainMenu());
-	await playIntro();
+	const test = await mainMenu();
+	console.log("Result from main menu:");
+	console.log(test);
+	//await playIntro();
 		
 	console.log("Done!");
 	//playIntro();

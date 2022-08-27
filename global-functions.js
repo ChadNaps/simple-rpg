@@ -10,23 +10,18 @@ function isJson(data) {
 	}
 }
 
-exports.dramaticElipses = async function (message, times, intervalInMs, iostream) {
+exports.dramaticEllipses = async function (message, times, intervalInMs, iostream) {
 	iostream.write(message);
-	return await waitAndDo(times);
+	return waitAndDo(times);
 	async function waitAndDo(times) {
 		if(times < 1) {
-			iostream.write('\n');
-			return new Promise(resolve => resolve("waitAndDo resolution"));
+			return new Promise(resolve => { setTimeout(resolve("waitAndDo resolution"), intervalInMs) });
 		}
-		return await lambda();
-		async function lambda() {
-			return new Promise(resolve => {
-				setTimeout(() => {
-					iostream.write('.');
-					return waitAndDo(times-1);
-				}, intervalInMs);
-				resolve("lambda resolution");
-			});
+		timeoutWrapper().then(result => {return waitAndDo(times-1)} );
+		async function timeoutWrapper() {
+			setTimeout(() => { 
+				iostream.write('.');
+			}, intervalInMs * times);
 		}
 	}
 }
@@ -42,16 +37,11 @@ exports.prompt = async function (iostream, responsesAndActionsObject, message = 
 	} catch {
 		throw new Error("Second parameter MUST be an object of acceptable responses in the form { 'playerSelectedResponse': resultingActionFunction }");
 	}
-
 	iostream.question(message, (selection) => {
-		console.log(selection);
-		console.log(responsesAndActionsObject[selection]);
 		if (selection === '1') {
-		const returnedPromise = responsesAndActionsObject[selection]();
-		console.log(returnedPromise);
+			return responsesAndActionsObject[selection]();
 		} else {
 			exports.prompt(iostream, responsesAndActionsObject);
 		}
 	});
-	return;
 }
