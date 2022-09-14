@@ -1,11 +1,6 @@
-const isDevMode = false;
-
 const readline = require('readline');
-const { dramaticEllipses, quit, prompt } = require('./global-functions.js');
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
-});
+const isDevMode = false;
+const { askQuestion, quit, dramaticEllipses } = require('./global-functions.js');
 
 const saveData = {
 	exists: false,
@@ -34,42 +29,30 @@ Please select an option: \n\
 		 2. Load Game \n\
 		 3. Quit \n";
 	const todoMessage = "This feature is still in development. Please select another: ";
-
 	async function newGame() {
-		const descendText = "Good luck adventurer. You begin your descent";
 		console.clear();
-		if (isDevMode) {
-			return; 
-		} else {
-			return dramaticEllipses(descendText, 5, 750, rl);
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout
+		});
+		const descendText = "Good luck adventurer. You begin your descent";
+		rl.write(descendText);
+		const success = await dramaticEllipses(rl, 4, 500);
+		if (!success) {
+			return new Promise((resolve, reject) => { reject(false) });
 		}
+		return new Promise(resolve => { resolve(success) });
 	}
 
 	console.clear();
-	prompt(rl, { "1": newGame }, welcomeMessage).then((returnVal) => { console.log("callback return next"); console.log(returnVal) });
-	//console.log("newGame return value next:");
-	//console.log(returnVal);
-
-	// function prompt(message = tryAgainMessage) {
-//	rl.question(message, (selection) => {
-//		const descendText = "Good luck adventurer. You begin your descent";
-//		if (selection === '1') {
-//			console.clear();
-//			if (isDevMode)
-//				playIntro(); // TODO - Remove if/else before launch
-//			else {
-//				dramaticEllipses(descendText, 5, 750, rl);
-//				setTimeout(playIntro, 800*5);
-//			}
-//		} else if (selection === '2') {
-//			prompt(todoMessage);
-//		} else if (selection === '3') {
-//			rl.close();
-//		} else {
-//			prompt();
-//		}
-//	});
-//}
+	const succeeded = await askQuestion(welcomeMessage,
+		{ 
+			1: newGame
+		}
+	);
+	if (succeeded) {
+		return new Promise(resolve => { resolve(true) });
+	}
 }
 
 function playIntro() {
@@ -101,12 +84,13 @@ In fact, you're very average looking, which you suppose could be worse.\n";
 }
 
 async function main() {
-	const test = await mainMenu();
-	console.log("Result from main menu:");
-	console.log(test);
+	const tempVar = await mainMenu();
+	console.log(tempVar);
+	console.log("Done!");
+	//mainMenu();
 	//await playIntro();
 		
-	console.log("Done!");
+	//quit(rl, 0);
 	//playIntro();
 	// setTimeout(() => { rl.close(); }, 3000);
 }
