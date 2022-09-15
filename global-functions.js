@@ -21,8 +21,8 @@ exports.askQuestion = async function (question, acceptableResponses) {
 
 exports.sleep = async function (ms) {
 	return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
+		setTimeout(resolve, ms);
+	});
 }
 
 exports.dramaticEllipses = async function (iostream, times, intervalInMs ) {
@@ -52,7 +52,8 @@ async function processInput (ioStream, responsesAndActionsObject, message = tryA
 	ioStream.write(message);
 	for await (const line of ioStream) {
 		const intifiedUserInput = parseInt(line);
-		if (intifiedUserInput === 1) { // TODO - Change this 1 to any numeric value.
+		const size = Object.keys(responsesAndActionsObject).length;
+		if (!isNaN(intifiedUserInput) && intifiedUserInput <= size { 
 			return await responsesAndActionsObject[intifiedUserInput]();
 		} else {
 			console.log(tryAgainMessage);
