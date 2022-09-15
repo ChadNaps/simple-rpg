@@ -43,56 +43,57 @@ Please select an option: \n\
 		}
 		return new Promise(resolve => { resolve(success) });
 	}
-
 	console.clear();
-	const succeeded = await askQuestion(welcomeMessage,
-		{ 
-			1: newGame
+	try {
+		const succeeded = await askQuestion(welcomeMessage,
+			{ 
+				1: newGame
+			}
+		);
+		if (succeeded) {
+			return new Promise(resolve => { resolve(true) });
 		}
-	);
-	if (succeeded) {
-		return new Promise(resolve => { resolve(true) });
+	} catch (err) {
+		if (err !== false) {
+			throw new Error("Error in MainMenu");
+		}
 	}
 }
 
 function playIntro() {
-	const flavorText = "It's been days since you last saw a friendly face. The cool air of the dungeon sits stale around you. \n\
-Looking down, past the torch you bear, you see a puddle. In it, you find a stranger staring back at you. \n\
-You are surprised to see how filthy your face has gotten these last few days. Though, if you disregard the mounting filth, you arn't ugly. \n\
+	const flavorText = "It's been days since you last saw a friendly face. The cool air of the dungeon sits stale around you. \
+Looking down, past the torch you bear, you see a puddle. In it, you find a stranger staring back at you. \
+You are surprised to see how filthy your face has gotten these last few days. Though, if you disregard the mounting filth, you arn't ugly. \
 In fact, you're very average looking, which you suppose could be worse.\n";
 	const raceQ = "Please select your race: \n\
-		       1. Human \n\
-		       2. Elf \n\
-		       3. Dwarf \n\ ";
+					 1. Human \n\
+					 2. Elf \n\
+					 3. Dwarf \n\ ";
 	console.clear();
 	console.log(flavorText);
-	prompt(rl, { '1': () => console.log("TODO") }, raceQ);
-//
-//	function prompt(message = tryAgainMessage) {
-//		rl.question(message, (selection) => {
-//				if (selection === '1') {
-//					saveData.character.class = "Human";
-//				} else if (selection === '2') {
-//					saveData.character.class = "Elf";
-//				} else if (selection === '3') {
-//					saveData.character.class = "Dwarf";
-//				} else {
-//					prompt();
-//				}
-//		});
-//	}
+	//prompt(rl, { '1': () => console.log("TODO") }, raceQ);
+	//
+	//	function prompt(message = tryAgainMessage) {
+	//		rl.question(message, (selection) => {
+	//				if (selection === '1') {
+	//					saveData.character.class = "Human";
+	//				} else if (selection === '2') {
+	//					saveData.character.class = "Elf";
+	//				} else if (selection === '3') {
+	//					saveData.character.class = "Dwarf";
+	//				} else {
+	//					prompt();
+	//				}
+	//		});
+	//	}
 }
 
 async function main() {
-	const tempVar = await mainMenu();
-	console.log(tempVar);
-	console.log("Done!");
-	//mainMenu();
+	await mainMenu();
 	//await playIntro();
-		
+	console.log("Done!");
+
 	//quit(rl, 0);
-	//playIntro();
-	// setTimeout(() => { rl.close(); }, 3000);
 }
 
 main();

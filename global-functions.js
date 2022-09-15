@@ -19,38 +19,24 @@ exports.askQuestion = async function (question, acceptableResponses) {
 	return await processInput(tempRL, acceptableResponses, question);
 }
 
+exports.sleep = async function (ms) {
+	return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 exports.dramaticEllipses = async function (iostream, times, intervalInMs ) {
 	const wrapper = async () => {
 		const originalTimesValue = times;
 		do {
-		setTimeout(() => { iostream.write('.'); }, intervalInMs * times);
-		times--;
-	} while (times > 0);
-		function timeout(ms) {
-			return new Promise(resolve => setTimeout(resolve(true), ms));
-		}
-		return await timeout(intervalInMs * originalTimesValue);
+			setTimeout(() => { iostream.write('.'); }, intervalInMs * times);
+			times--;
+		} while (times > 0);
+		await exports.sleep(intervalInMs * originalTimesValue);
 		iostream.write('\n');
-		//setTimeout(() => { iostream.write('\n') }, intervalInMs * originalTimesValue);
-		//return true;
+		return true;
 	}
-	const returnedPromise = await wrapper();
-	return returnedPromise;
-//	await waitAndDo(times);
-//	async function waitAndDo(times) {
-//		if(times < 1) {
-//			return new Promise(resolve => { resolve(true); });
-//		}
-//		timeoutWrapper()
-//			.then(result => { console.log("wrapper next:"); console.log(result); waitAndDo(times-1); })
-//			.then(result => { console.log("wrapper2 next"); console.log(result); return new Promise(resolve => { console.log("REST"); resolve(true) }) });
-//		async function timeoutWrapper() {
-//			setTimeout(() => { 
-//				iostream.write('.');
-//				return new Promise(resolve => { resolve(true); });
-//			}, intervalInMs * times);
-//		}
-//	}
+	return await wrapper();
 }
 
 exports.quit = function (interfaceToQuit, code = 0) {
@@ -68,9 +54,6 @@ async function processInput (ioStream, responsesAndActionsObject, message = tryA
 		const intifiedUserInput = parseInt(line);
 		if (intifiedUserInput === 1) { // TODO - Change this 1 to any numeric value.
 			return await responsesAndActionsObject[intifiedUserInput]();
-			//console.log("\n tempVal in processInput next:");
-			//console.log(tempVal);
-			//return new Promise(resolve => { resolve(true); });
 		} else {
 			console.log(tryAgainMessage);
 			continue;
