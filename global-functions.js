@@ -53,7 +53,7 @@ async function processInput (ioStream, responsesAndActionsObject, message = tryA
 	for await (const line of ioStream) {
 		const intifiedUserInput = parseInt(line);
 		const size = Object.keys(responsesAndActionsObject).length;
-		if (!isNaN(intifiedUserInput) && intifiedUserInput <= size { 
+		if (!isNaN(intifiedUserInput) && intifiedUserInput <= size) { 
 			return await responsesAndActionsObject[intifiedUserInput]();
 		} else {
 			console.log(tryAgainMessage);
