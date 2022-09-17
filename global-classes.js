@@ -1,4 +1,7 @@
-const saveFileLocationDefault = "//<game dir>/save_files";
+const path = require('path');
+const pwd = path.dirname('.');
+const saveFileLocationDefault = path(pwd, 'save_games');
+
 const saveData = {
   config: {
     id: -1,
