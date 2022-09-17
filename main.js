@@ -3,21 +3,39 @@ const isDevMode = false;
 const { askQuestion, quit, dramaticEllipses } = require('./global-functions.js');
 
 const saveData = {
-	exists: false,
-	player: { name: "" },
+	config: {
+		id: -1,
+		saveFileLocation: "~/.simpleRPG/save_files"
+	}
 	character: {
+		id: -1,
+		isAlive: true,
+		type: "", // PC/NPC/Mob
 		name: "",
 		class: "",
 		level: 1,
 		exp: 0,
 		expToLevel: 50,
+		gold: 0,
+		stats: {
+			str: -1,
+			dex: -1,
+			con: -1,
+			int: -1,
+			wis: -1,
+			cha: -1
+		},
+		location: {
+			id: -1,
+			name: ""
+		},
 		inventory: [],
-		statusAilments: {
-			poisoned: false,
-			blind: false,
-			fatigued: false,
-			unconscious: false,
-			bleeding: false	
+		gear: {
+			head: {},
+			mainHand: {},
+			offHand: {},
+			body: {},
+			boots: {}
 		}
 	}
 };
@@ -42,6 +60,18 @@ Please select an option: \n\
 			return new Promise((resolve, reject) => { reject(false) });
 		}
 		return new Promise(resolve => { resolve(success) });
+	}
+	async function loadGame() {
+		// [x] build out db schema
+		// [] check if save file(s) exist
+		// [] load them into memory
+		// [] display saves to player
+		// [] 
+		// ----------------------
+		
+	}
+	async quit() {
+		//TODO
 	}
 	console.clear();
 	try {
