@@ -10,6 +10,7 @@ Please select an option: \n\
 		 2. Load Game \n\
 		 3. Quit \n";
 	const todoMessage = "This feature is still in development. Please select another: ";
+
 	async function newGame() {
 		console.clear();
 		const rl = readline.createInterface({
@@ -25,6 +26,7 @@ Please select an option: \n\
 		return new Promise(resolve => { resolve(success) });
 	}
 	async function loadGame() {
+		// TODO
 		// [x] build out db schema
 		// [] check if save file(s) exist
 		// [] load them into memory
@@ -47,7 +49,7 @@ Please select an option: \n\
 		}
 	} catch (err) {
 		if (err !== false) {
-			throw new Error("Error in MainMenu");
+			throw new Error("Error in mainMenu()");
 		}
 	}
 }
