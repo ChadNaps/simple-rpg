@@ -3,7 +3,7 @@ const pwd = path.resolve(path.dirname('.'));
 const saveFileLocationDefault = path.join(pwd, 'save_games');
 const randId = function () { return Math.floor(Math.random() * 10000); }
 
-class SaveData {
+exports.SaveData = class SaveData {
 	constructor(saveDataObj) {
 		this.config = {},
 		this.config.id = saveDataObj ? saveDataObj.config.id : randId();
@@ -36,7 +36,7 @@ class SaveData {
 		this.character.gear.body = saveDataObj ? saveDataObj.character.gear.body : {};
 		this.character.gear.boots = saveDataObj ? saveDataObj.character.gear.boots : {};
 	}
-	get configId() { return this.config.id; }
+	get configId() { return this.config.id; };
 	get configSaveFileLocation() { return this.config.saveFileLocation; }
 	get charId() { return this.character.id; }
 	get charIsAlive() { return this.character.isAlive; }

@@ -61,3 +61,22 @@ async function processInput (ioStream, responsesAndActionsObject, message = tryA
 		}
 	}
 }
+
+exports.parseSaveDataAndDo = function (dataFile, funct) {
+	try {
+		for (data in dataFile) {
+			if (Number.isNaN(Number.parseInt(data))) {
+				funct(data);
+				for (subData in dataFile[data]) {
+					if (Number.isNaN(Number.parseInt(subData))) {
+						funct(subData);
+						for (subSubData in dataFile[data][subData])
+							if (Number.isNaN(Number.parseInt(subSubData))) {
+								funct(subSubData);
+							}
+					}
+				}
+			}
+		}
+	} catch (err) { throw new Error(err.message); }
+}

@@ -1,7 +1,6 @@
 const readline = require('readline');
 const isInDevMode = false;
 const { askQuestion, quit, dramaticEllipses } = require('./global-functions.js');
-const { saveData } = require('./global_classes.js');
 
 async function mainMenu() {
 	const welcomeMessage = "Welcome to my game, enjoy! \n\
@@ -34,9 +33,9 @@ Please select an option: \n\
 		// ----------------------
 		
 	}
-	async quit() {
+	//async quit() {
 		//TODO
-	}
+	//}
 	console.clear();
 	try {
 		const succeeded = await askQuestion(welcomeMessage,
