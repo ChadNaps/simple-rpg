@@ -1,6 +1,7 @@
 const readline = require('readline');
 const isInDevMode = false;
 const { askQuestion, quit, dramaticEllipses } = require('./global-functions.js');
+const fs = require('node:fs');
 
 async function mainMenu() {
 	const welcomeMessage = "Welcome to my game, enjoy! \n\
@@ -24,14 +25,56 @@ Please select an option: \n\
 		}
 		return new Promise(resolve => { resolve(success) });
 	}
-	async function loadGame() {
+	async function loadGame(dir = './save_files') {
 		// TODO
 		// [x] build out db schema
-		// [] check if save file(s) exist
+		// [x] check if save file(s) exist
 		// [] load them into memory
 		// [] display saves to player
 		// ----------------------
-		
+		const saveGames = [];
+		fs.readdir(dir, (err, files) => {
+			if (err)
+				console.log(err.message);
+			getSaveFiles();
+			console.clear();
+			if (saveGames.length === 0) {
+				console.log("There were no save files found, returning to main menu...");
+				setTimeout(mainMenu, 5000);
+			} else {
+				let [prompt, saves] = assemblePrompt();
+				askQuestion(prompt, saves)
+				.then(result => { return result; });
+			}
+			function assemblePrompt() {
+				let prompt = "Select a game to load:\n";
+				const saves = [];
+				let saveNum = 1; // TODO - Working Here
+				for (save of saveGames) {
+					prompt += `${saveNum}: ${save.slice(0, -4)}\n`;
+					console.log(saveNum);
+					saves[saveNum-1] = async function () { console.log(saveNum); console.log(saveGames[saveNum]); return executeLoad(saveNum-1, saveGames[saveNum-1].slice(0, -4)) };
+					saveNum++;
+				}
+				prompt += `${saveNum}: Return to main menu\n`;
+				return [prompt, saves];
+				async function executeLoad(saveFileNum, saveFileName) {
+					console.log(`Loaded save file ${saveFileNum}: ${saveFileName}`);
+					//TODO
+					return true;
+				}
+			}
+			function getSaveFiles() {
+				for (file of files) {
+					if (file.includes('.sav'))
+						saveGames.push(file);
+				}
+			}
+		});
+//		fs.readFile('./testfile.sav', 'utf8', (err, data) => {
+//			console.log(data);
+//			return;
+//		});
 	}
 	//async quit() {
 		//TODO
@@ -40,7 +83,8 @@ Please select an option: \n\
 	try {
 		const succeeded = await askQuestion(welcomeMessage,
 			{ 
-				1: newGame
+				1: newGame,
+				2: loadGame
 			}
 		);
 		if (succeeded) {
@@ -64,7 +108,6 @@ In fact, you're very average looking, which you suppose could be worse.\n";
 					 3. Dwarf \n\ ";
 	console.clear();
 	console.log(flavorText);
-	//prompt(rl, { '1': () => console.log("TODO") }, raceQ);
 	//
 	//	function prompt(message = tryAgainMessage) {
 	//		rl.question(message, (selection) => {
