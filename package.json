@@ -1,0 +1,21 @@
+{
+  "name": "simple-rpg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChadNaps/simple-rpg.git"
+  },
+  "author": "Chad Napper",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChadNaps/simple-rpg/issues"
+  },
+  "homepage": "https://github.com/ChadNaps/simple-rpg#readme"
+}
